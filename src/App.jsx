@@ -21,7 +21,26 @@ import { Loader2 } from 'lucide-react';
 export default function App() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState('dashboard');
+
+  // Initialize active tab from URL query param, hash, or localStorage
+  const [activeTab, setActiveTab] = useState(() => {
+    try {
+      const validTabs = ['dashboard', 'rooms', 'bookings', 'settlements', 'profile'];
+      const params = new URLSearchParams(window.location.search);
+      const tabParam = params.get('tab');
+      if (tabParam && validTabs.includes(tabParam)) return tabParam;
+
+      const hashParam = window.location.hash.replace('#', '');
+      if (hashParam && validTabs.includes(hashParam)) return hashParam;
+
+      const savedTab = localStorage.getItem('hotels_partner_active_tab');
+      if (savedTab && validTabs.includes(savedTab)) return savedTab;
+    } catch (e) {
+      // Ignore
+    }
+    return 'dashboard';
+  });
+
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
   
   // Data states
@@ -34,6 +53,34 @@ export default function App() {
   // Modals
   const [isCheckInOpen, setIsCheckInOpen] = useState(false);
   const [isAddRoomOpen, setIsAddRoomOpen] = useState(false);
+
+  // Synchronize active tab with URL search params & localStorage
+  useEffect(() => {
+    try {
+      localStorage.setItem('hotels_partner_active_tab', activeTab);
+      const params = new URLSearchParams(window.location.search);
+      params.set('tab', activeTab);
+      const newUrl = `${window.location.pathname}?${params.toString()}`;
+      window.history.replaceState(null, '', newUrl);
+    } catch (e) {
+      // Ignore
+    }
+  }, [activeTab]);
+
+  // Handle browser back and forward navigation
+  useEffect(() => {
+    const handlePopState = () => {
+      const validTabs = ['dashboard', 'rooms', 'bookings', 'settlements', 'profile'];
+      const params = new URLSearchParams(window.location.search);
+      const tabParam = params.get('tab');
+      if (tabParam && validTabs.includes(tabParam)) {
+        setActiveTab(tabParam);
+      }
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
 
   // Initialize Auth
   useEffect(() => {
@@ -84,6 +131,12 @@ export default function App() {
   const handleLogout = () => {
     removeAuthToken();
     removeAuthUser();
+    try {
+      localStorage.removeItem('hotels_partner_active_tab');
+      window.history.replaceState(null, '', window.location.pathname);
+    } catch (e) {
+      // Ignore
+    }
     setUser(null);
     setHotel(null);
     setRooms([]);
