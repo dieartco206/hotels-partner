@@ -19,14 +19,14 @@ export default function Navbar({ user, hotel, onOpenCheckIn, onLogout, onToggleS
           <div className="w-9 h-9 rounded-xl bg-brand-600 flex items-center justify-center text-white font-bold text-lg shadow-sm shrink-0">
             <Building2 className="w-5 h-5" />
           </div>
-          <div>
-            <div className="flex items-center gap-2">
-              <span className="font-bold text-slate-900 tracking-tight text-base">Hotels Partner</span>
-              <span className="text-[11px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded-full bg-brand-50 text-brand-700 border border-brand-200">
+          <div className="shrink-0">
+            <div className="flex items-center gap-1.5 sm:gap-2">
+              <span className="font-bold text-slate-900 tracking-tight text-sm sm:text-base whitespace-nowrap">Hotels Partner</span>
+              <span className="hidden xs:inline-block text-[10px] sm:text-[11px] font-semibold uppercase tracking-wider px-1.5 sm:px-2 py-0.5 rounded-full bg-brand-50 text-brand-700 border border-brand-200 shrink-0">
                 Extranet
               </span>
             </div>
-            <p className="text-xs text-slate-500 font-medium">Property Operations & Revenue</p>
+            <p className="hidden md:block text-xs text-slate-500 font-medium">Property Operations & Revenue</p>
           </div>
         </div>
 
