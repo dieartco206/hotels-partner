@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Building2, Lock, Mail, ArrowRight, ShieldCheck, Sparkles } from 'lucide-react';
+import { Building2, Lock, Mail, ArrowRight, ShieldCheck } from 'lucide-react';
 import { partnerApi } from '../services/api';
 
 export default function Login({ onLoginSuccess }) {
@@ -97,9 +97,9 @@ export default function Login({ onLoginSuccess }) {
 
           {/* Quick Demo Logins */}
           <div className="mt-6 pt-5 border-t border-slate-200">
-            <div className="flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-3">
-              <Sparkles className="w-3.5 h-3.5 text-brand-500" />
-              <span>One-Click Partner Demo Logins</span>
+            <div className="flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-3">
+              <Building2 className="w-3.5 h-3.5 text-slate-600" />
+              <span>Pilihan Akun Demo Mitra</span>
             </div>
 
             <div className="space-y-2">

@@ -4,7 +4,6 @@ import {
   Plus, 
   Users, 
   Maximize2, 
-  Sparkles, 
   Check, 
   Edit3, 
   Save, 
