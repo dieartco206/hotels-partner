@@ -22,6 +22,7 @@ export default function App() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState('dashboard');
+  const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
   
   // Data states
   const [hotel, setHotel] = useState(null);
@@ -94,22 +95,26 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col font-sans">
+    <div className="min-h-screen bg-slate-50/70 flex flex-col font-sans">
       <Navbar
         user={user}
         hotel={hotel}
         onOpenCheckIn={() => setIsCheckInOpen(true)}
         onLogout={handleLogout}
+        isSidebarOpen={isMobileSidebarOpen}
+        onToggleSidebar={() => setIsMobileSidebarOpen(prev => !prev)}
       />
 
-      <div className="flex-1 flex max-w-7xl w-full mx-auto">
+      <div className="flex-1 w-full flex min-h-0">
         <Sidebar
           activeTab={activeTab}
           setActiveTab={setActiveTab}
           onOpenCheckIn={() => setIsCheckInOpen(true)}
+          isOpen={isMobileSidebarOpen}
+          onClose={() => setIsMobileSidebarOpen(false)}
         />
 
-        <main className="flex-1 p-6 lg:p-8 overflow-y-auto">
+        <main className="flex-1 w-full min-w-0 p-4 sm:p-6 lg:p-8 xl:p-10 overflow-y-auto">
           {loading ? (
             <div className="flex flex-col items-center justify-center py-20 text-slate-400 gap-3">
               <Loader2 className="w-8 h-8 animate-spin text-brand-600" />
